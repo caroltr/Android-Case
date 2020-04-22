@@ -1,4 +1,4 @@
-package com.truckpad.androidcase
+package com.truckpad.androidcase.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -10,6 +10,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.truckpad.androidcase.R
 import com.truckpad.androidcase.api.ApiFactory
 import com.truckpad.androidcase.model.Place
 import com.truckpad.androidcase.model.RouteRequest
@@ -17,13 +18,15 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
+class MainActivity : AppCompatActivity(), MainContract.View, OnMapReadyCallback {
 
+    private lateinit var presenter: MainContract.Presenter
     private lateinit var mMap: GoogleMap
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        setPresenter(MainPresenter(this))
 
         (map as SupportMapFragment).getMapAsync(this)
 
@@ -63,5 +66,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val sydney = LatLng(-34.0, 151.0)
         mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+    }
+
+    override fun setPresenter(presenter: MainContract.Presenter) {
+        this.presenter = presenter
     }
 }

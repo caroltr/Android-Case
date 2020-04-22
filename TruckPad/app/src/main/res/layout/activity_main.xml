@@ -72,7 +72,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_enter"
-        tools:context=".MapsActivity" />
+        tools:context=".main.MainActivity" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
