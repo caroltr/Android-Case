@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, MainContract.View 
 
         (map as SupportMapFragment).getMapAsync(this)
 
-        btn_enter.setOnClickListener { presenter.findRoute() }
+        btn_enter.setOnClickListener { presenter.findRoute(-46.68664, -23.59496, -46.67678, -23.59867, 5.0, 4.4) }
     }
 
     /**

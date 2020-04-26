@@ -2,6 +2,7 @@ package com.truckpad.androidcase.main
 
 import android.util.Log
 import com.truckpad.androidcase.api.ApiFactory
+import com.truckpad.androidcase.model.Location
 import com.truckpad.androidcase.model.Place
 import com.truckpad.androidcase.model.RouteRequest
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -9,10 +10,20 @@ import io.reactivex.schedulers.Schedulers
 
 class MainPresenter(private val view: MainContract.View) : MainContract.Presenter {
 
-    override fun findRoute() {
-        val from = Place(listOf(-46.68664, -23.59496))
-        val to = Place(listOf(-46.67678, -23.59867))
-        val route = RouteRequest(5, 4.4, listOf(from, to))
+    override fun findRoute(
+        fromLatitude: Double,
+        fromLongitude: Double,
+        toLatitude: Double,
+        toLongitude: Double,
+        fuelConsumption: Double,
+        fuelPrice: Double
+    ) {
+        val fromLocation = Location(fromLatitude, fromLongitude)
+        val toLocation = Location(toLatitude, toLongitude)
+
+        val from = Place(fromLocation.toList())
+        val to = Place(toLocation.toList())
+        val route = RouteRequest(fuelConsumption, fuelPrice, arrayListOf(from, to))
 
         val r = ApiFactory.geoApi
             .findRoute(route)
@@ -24,5 +35,4 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
                 Log.e("Carol", "Error")
             })
     }
-
 }

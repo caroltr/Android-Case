@@ -6,7 +6,9 @@ import com.truckpad.androidcase.base.BaseView
 interface MainContract {
 
     interface Presenter: BasePresenter {
-        fun findRoute()
+        fun findRoute(fromLatitude: Double, fromLongitude: Double,
+                      toLatitude: Double, toLongitude: Double,
+                      fuelConsumption: Double, fuelPrice: Double)
     }
 
     interface View: BaseView<Presenter> {
