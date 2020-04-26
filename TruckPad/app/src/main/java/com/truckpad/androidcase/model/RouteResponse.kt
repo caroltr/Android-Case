@@ -21,3 +21,8 @@ data class RouteResponse(
     @SerializedName("toll_count") val tollCount: Int,
     @SerializedName("total_cost") val totalCost: Double
 )
+
+data class Point(
+    @SerializedName("point") val point: List<Double>,
+    @SerializedName("provider") val provider: String
+)

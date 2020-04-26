@@ -7,3 +7,7 @@ data class RouteRequest(
     @SerializedName("fuel_price") val fuelPrice: Double,
     @SerializedName("places") val places: List<Place>
 )
+
+data class Place(
+    @SerializedName("point") val point: List<Double>
+)

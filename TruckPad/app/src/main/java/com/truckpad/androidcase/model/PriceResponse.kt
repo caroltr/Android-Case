@@ -1,9 +1,11 @@
 package com.truckpad.androidcase.model
 
+import com.google.gson.annotations.SerializedName
+
 data class PriceResponse(
-    val frigorificada: Double,
-    val geral: Double,
-    val granel: Double,
-    val neogranel: Double,
-    val perigosa: Double
+    @SerializedName("frigorificada") val frigorificada: Double,
+    @SerializedName("geral") val geral: Double,
+    @SerializedName("granel") val granel: Double,
+    @SerializedName("neogranel") val neogranel: Double,
+    @SerializedName("perigosa") val perigosa: Double
 )
