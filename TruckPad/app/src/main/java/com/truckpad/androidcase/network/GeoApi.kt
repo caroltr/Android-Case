@@ -1,4 +1,4 @@
-package com.truckpad.androidcase.api
+package com.truckpad.androidcase.network
 
 import com.truckpad.androidcase.model.RouteRequest
 import com.truckpad.androidcase.model.RouteResponse

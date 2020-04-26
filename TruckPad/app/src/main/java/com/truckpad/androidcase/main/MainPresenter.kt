@@ -1,7 +1,7 @@
 package com.truckpad.androidcase.main
 
 import android.util.Log
-import com.truckpad.androidcase.api.ApiFactory
+import com.truckpad.androidcase.network.ApiFactory
 import com.truckpad.androidcase.model.Location
 import com.truckpad.androidcase.model.Place
 import com.truckpad.androidcase.model.RouteRequest
