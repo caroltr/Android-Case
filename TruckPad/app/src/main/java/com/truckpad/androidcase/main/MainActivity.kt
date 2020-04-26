@@ -18,7 +18,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity(), MainContract.View, OnMapReadyCallback {
+class MainActivity : AppCompatActivity(), OnMapReadyCallback, MainContract.View {
 
     private lateinit var presenter: MainContract.Presenter
     private lateinit var mMap: GoogleMap
@@ -30,24 +30,7 @@ class MainActivity : AppCompatActivity(), MainContract.View, OnMapReadyCallback 
 
         (map as SupportMapFragment).getMapAsync(this)
 
-        btn_enter.setOnClickListener { findRoute() }
-    }
-
-    fun findRoute() {
-
-        val from = Place(listOf(-46.68664, -23.59496))
-        val to = Place(listOf(-46.67678, -23.59867))
-        val route = RouteRequest(5, 4.4, listOf(from, to))
-
-        val r = ApiFactory.api
-            .findRoute(route)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ response ->
-                Log.e("Carol", "Success")
-            }, {
-                Log.e("Carol", "Error")
-            })
+        btn_enter.setOnClickListener { presenter.findRoute() }
     }
 
     /**
