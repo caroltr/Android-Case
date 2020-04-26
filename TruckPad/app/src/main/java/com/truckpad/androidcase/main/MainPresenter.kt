@@ -14,7 +14,7 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
         val to = Place(listOf(-46.67678, -23.59867))
         val route = RouteRequest(5, 4.4, listOf(from, to))
 
-        val r = ApiFactory.api
+        val r = ApiFactory.geoApi
             .findRoute(route)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

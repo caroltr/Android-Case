@@ -6,15 +6,19 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object ApiFactory {
 
-    //    private const val url = "https://tictac.api.truckpad.io/v1/antt_price/all"
-    private const val url = "https://geo.api.truckpad.io/v1/"
+    private const val tictacUrl = "https://tictac.api.truckpad.io/v1/"
+    private const val geoUrl = "https://geo.api.truckpad.io/v1/"
 
-    private fun retrofit(): Retrofit = Retrofit.Builder()
-        .baseUrl(url)
+    private fun retrofitBuilder(): Retrofit.Builder = Retrofit.Builder()
         .addConverterFactory(GsonConverterFactory.create())
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-        .build()
 
-    val api: Api = retrofit()
-        .create(Api::class.java)
+    val geoApi: GeoApi = retrofitBuilder()
+        .baseUrl(geoUrl).build()
+        .create(GeoApi::class.java)
+
+    val tictacApi: TictacApi = retrofitBuilder()
+        .baseUrl(tictacUrl).build()
+        .create(TictacApi::class.java)
+
 }
