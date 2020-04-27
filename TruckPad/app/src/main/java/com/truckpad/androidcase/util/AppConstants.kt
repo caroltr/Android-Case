@@ -1,5 +1,5 @@
 package com.truckpad.androidcase.util
 
-enum class PERMISSION_REQUEST(val code: Int) {
-    LOCATION(100);
+enum class RequestCode(val code: Int) {
+    PERMISSION_LOCATION(100);
 }
