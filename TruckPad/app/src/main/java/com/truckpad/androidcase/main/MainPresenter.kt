@@ -10,6 +10,7 @@ import com.truckpad.androidcase.model.Place
 import com.truckpad.androidcase.model.RouteRequest
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import java.net.URLEncoder
 
 class MainPresenter(private val view: MainContract.View) : MainContract.Presenter {
 
@@ -39,10 +40,24 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
             })
     }
 
-    override fun getGeocode(address: String) {
+    override fun getGeocode(from: String, to: String) {
+        fetchGeocode(from)
+        fetchGeocode(to)
+    }
+
+    override fun getLastLocation(fusedLocationClient: FusedLocationProviderClient) {
+        fusedLocationClient.lastLocation
+            .addOnSuccessListener { location: Location? ->
+                location?.let { Coordinate(it.latitude, it.longitude) }
+            }
+    }
+
+    private fun fetchGeocode(address: String) {
         val googleKey = "AIzaSyBW2GhHdV3obS6jEkTGHjod5REtuSSKFcQ"
-        val result = ApiFactory.geocodeApi
-            .getGeocode(address, googleKey)
+        val addressEncoded = URLEncoder. encode(address,"UTF-8");
+
+        val result1 = ApiFactory.geocodeApi
+            .getGeocode(addressEncoded, googleKey)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ response ->
@@ -54,12 +69,5 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
             }, {
                 Log.e("Carol", "Error")
             })
-    }
-
-    override fun getLastLocation(fusedLocationClient: FusedLocationProviderClient) {
-        fusedLocationClient.lastLocation
-            .addOnSuccessListener { location: Location? ->
-                location?.let { Coordinate(it.latitude, it.longitude) }
-            }
     }
 }

@@ -30,7 +30,14 @@ class MainActivity : AppCompatActivity(), MainContract.View { // OnMapReadyCallb
 
         checkPermissions()
 
-        btn_enter.setOnClickListener { presenter.getGeocode("Santa+Rita+do+Sapucai") }
+        btn_enter.setOnClickListener { getGeocode() }
+    }
+
+    private fun getGeocode() {
+        val from = et_from.text.toString()
+        val to = et_to.text.toString()
+
+        presenter.getGeocode(from, to)
     }
 
     /**

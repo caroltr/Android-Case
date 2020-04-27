@@ -11,7 +11,7 @@ interface MainContract {
                       toLatitude: Double, toLongitude: Double,
                       fuelConsumption: Double, fuelPrice: Double)
 
-        fun getGeocode(address: String)
+        fun getGeocode(from: String, to: String)
 
         fun getLastLocation(fusedLocationClient: FusedLocationProviderClient)
     }
