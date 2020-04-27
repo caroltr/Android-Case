@@ -11,6 +11,7 @@ interface GeoApi {
 
     @POST("route")
     fun findRoute(
-        @Body body: RouteRequest): Single<Response<RouteResponse>>
+        @Body body: RouteRequest
+    ): Single<Response<RouteResponse>>
 
 }

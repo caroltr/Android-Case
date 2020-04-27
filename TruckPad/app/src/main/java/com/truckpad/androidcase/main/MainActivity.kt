@@ -2,7 +2,6 @@ package com.truckpad.androidcase.main
 
 import android.Manifest
 import android.content.pm.PackageManager
-import android.location.Location
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -20,9 +19,6 @@ class MainActivity : AppCompatActivity(), MainContract.View { // OnMapReadyCallb
     private lateinit var presenter: MainContract.Presenter
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
-    private var lat: Double = 0.0
-    private var lng: Double = 0.0
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -34,16 +30,7 @@ class MainActivity : AppCompatActivity(), MainContract.View { // OnMapReadyCallb
 
         checkPermissions()
 
-        fusedLocationClient.lastLocation
-            .addOnSuccessListener { location: Location? ->
-
-                location?.let {
-                    lat = it.latitude
-                    lng = it.longitude
-                }
-            }
-
-        btn_enter.setOnClickListener {}
+        btn_enter.setOnClickListener { presenter.getGeocode("Santa+Rita+do+Sapucai") }
     }
 
     /**

@@ -1,8 +1,11 @@
 package com.truckpad.androidcase.main
 
+import android.location.Location
 import android.util.Log
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.truckpad.androidcase.network.ApiFactory
-import com.truckpad.androidcase.model.Location
+import com.truckpad.androidcase.model.Coordinate
 import com.truckpad.androidcase.model.Place
 import com.truckpad.androidcase.model.RouteRequest
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -18,8 +21,8 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
         fuelConsumption: Double,
         fuelPrice: Double
     ) {
-        val fromLocation = Location(fromLatitude, fromLongitude)
-        val toLocation = Location(toLatitude, toLongitude)
+        val fromLocation = Coordinate(fromLatitude, fromLongitude)
+        val toLocation = Coordinate(toLatitude, toLongitude)
 
         val from = Place(fromLocation.toList())
         val to = Place(toLocation.toList())
@@ -34,5 +37,29 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
             }, {
                 Log.e("Carol", "Error")
             })
+    }
+
+    override fun getGeocode(address: String) {
+        val googleKey = "AIzaSyBW2GhHdV3obS6jEkTGHjod5REtuSSKFcQ"
+        val result = ApiFactory.geocodeApi
+            .getGeocode(address, googleKey)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ response ->
+                response.body()?.let {
+                    it.results.first().geometry.location
+                }
+
+                Log.e("Carol", "Success")
+            }, {
+                Log.e("Carol", "Error")
+            })
+    }
+
+    override fun getLastLocation(fusedLocationClient: FusedLocationProviderClient) {
+        fusedLocationClient.lastLocation
+            .addOnSuccessListener { location: Location? ->
+                location?.let { Coordinate(it.latitude, it.longitude) }
+            }
     }
 }
