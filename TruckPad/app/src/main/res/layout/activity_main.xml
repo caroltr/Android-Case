@@ -103,21 +103,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_axes" />
 
-    <EditText
-        android:id="@+id/et_fuel_value"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="12dp"
-        android:ems="10"
-        android:hint="@string/current_value"
-        android:imeOptions="actionDone"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_consumption" />
-
     <Button
         android:id="@+id/btn_enter"
         android:layout_width="0dp"
@@ -129,7 +114,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_fuel_value" />
+        app:layout_constraintTop_toBottomOf="@+id/et_consumption" />
 
     <!--    <fragment-->
 <!--        android:id="@+id/map"-->

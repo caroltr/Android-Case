@@ -9,8 +9,8 @@ import androidx.core.content.ContextCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.truckpad.androidcase.R
+import com.truckpad.androidcase.util.PERMISSION_REQUEST
 import kotlinx.android.synthetic.main.activity_main.*
-
 
 class MainActivity : AppCompatActivity(), MainContract.View { // OnMapReadyCallback
 
@@ -30,14 +30,17 @@ class MainActivity : AppCompatActivity(), MainContract.View { // OnMapReadyCallb
 
         checkPermissions()
 
-        btn_enter.setOnClickListener { getGeocode() }
+        btn_enter.setOnClickListener { calcPrice() }
     }
 
-    private fun getGeocode() {
+    private fun calcPrice() {
         val from = et_from.text.toString()
         val to = et_to.text.toString()
 
-        presenter.getGeocode(from, to)
+        val axes = et_axes.text.toString()
+        val consumption = et_consumption.text.toString()
+
+        presenter.calcPrice(from, to, axes, consumption)
     }
 
     /**
@@ -102,7 +105,7 @@ class MainActivity : AppCompatActivity(), MainContract.View { // OnMapReadyCallb
         ActivityCompat.requestPermissions(
             this@MainActivity,
             arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-            123
+            PERMISSION_REQUEST.LOCATION.code
         )
     }
 
@@ -111,7 +114,7 @@ class MainActivity : AppCompatActivity(), MainContract.View { // OnMapReadyCallb
         permissions: Array<String>, grantResults: IntArray
     ) {
         when (requestCode) {
-            123 -> {
+            PERMISSION_REQUEST.LOCATION.code -> {
                 // If request is cancelled, the result arrays are empty.
                 if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
                     // permission was granted, yay! Do the
