@@ -10,7 +10,7 @@
     <string name="path">Trajeto</string>
     <string name="amount_axes">Quantidade de eixos</string>
     <string name="average_consumption">Consumo médio (Km/L)</string>
-    <string name="current_value">Valor atual (R$)</string>
+    <string name="fuel_value">Preço do diesel (R$)</string>
 
     <string name="title_search">Pesquisa</string>
     <string name="title_result">Resultado</string>

@@ -7,6 +7,6 @@ data class Coordinate(
     @SerializedName("lng") val longitude: Double
 ) {
     fun toList(): ArrayList<Double> {
-        return arrayListOf(latitude, longitude)
+        return arrayListOf(longitude, latitude)
     }
 }
