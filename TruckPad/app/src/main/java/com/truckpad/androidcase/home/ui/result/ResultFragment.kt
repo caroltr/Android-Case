@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.truckpad.androidcase.R
 import com.truckpad.androidcase.model.PriceResponse
+import com.truckpad.androidcase.util.Extra
 import kotlinx.android.synthetic.main.fragment_result.view.*
 
 class ResultFragment : Fragment() {
@@ -23,7 +24,7 @@ class ResultFragment : Fragment() {
             ViewModelProviders.of(this).get(ResultViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_result, container, false)
 
-        arguments?.get("price_extra")?.let {
+        arguments?.get(Extra.PRICE.value)?.let {
             val prices = it as PriceResponse
             print(prices)
 

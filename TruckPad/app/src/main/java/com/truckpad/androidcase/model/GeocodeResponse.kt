@@ -3,11 +3,11 @@ package com.truckpad.androidcase.model
 import com.google.gson.annotations.SerializedName
 
 data class GeocodeResponse(
-    @SerializedName("results") val results: List<Result>,
+    @SerializedName("results") val results: List<GeocodeResult>,
     @SerializedName("status")  val status: String
 )
 
-data class Result(
+data class GeocodeResult(
     @SerializedName("address_components") val addressComponents: List<AddressComponent>,
     @SerializedName("formatted_address") val formattedAddress: String,
     @SerializedName("geometry") val geometry: Geometry,

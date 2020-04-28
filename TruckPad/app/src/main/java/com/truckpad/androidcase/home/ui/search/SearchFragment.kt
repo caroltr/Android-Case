@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.truckpad.androidcase.R
 import com.truckpad.androidcase.model.PriceResponse
+import com.truckpad.androidcase.util.Extra
 import kotlinx.android.synthetic.main.fragment_search.*
 
 
@@ -50,7 +51,7 @@ class SearchFragment : Fragment() {
 
     private fun showResultFragment(result: PriceResponse) {
         val bundle = Bundle()
-        bundle.putParcelable("price_extra", result)
+        bundle.putParcelable(Extra.PRICE.value, result)
 
         findNavController().navigate(R.id.action_navigation_search_to_navigation_result2, bundle)
     }
