@@ -12,4 +12,8 @@
     <string name="average_consumption">Consumo médio (Km/L)</string>
     <string name="current_value">Valor atual (R$)</string>
 
+    <string name="title_search">Pesquisa</string>
+    <string name="title_result">Resultado</string>
+    <string name="title_activity_home">HomeActivity</string>
+
 </resources>
