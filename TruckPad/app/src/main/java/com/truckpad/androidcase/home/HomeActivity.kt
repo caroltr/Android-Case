@@ -1,12 +1,12 @@
 package com.truckpad.androidcase.home
 
 import android.os.Bundle
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.truckpad.androidcase.R
 
 class HomeActivity : AppCompatActivity() {
@@ -22,6 +22,7 @@ class HomeActivity : AppCompatActivity() {
                 R.id.navigation_result, R.id.navigation_search
             )
         )
+
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
     }

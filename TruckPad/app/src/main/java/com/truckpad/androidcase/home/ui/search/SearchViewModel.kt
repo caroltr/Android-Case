@@ -15,11 +15,9 @@ import java.net.URLEncoder
 
 class SearchViewModel : ViewModel() {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is dashboard Fragment"
-    }
+    private val _result = MutableLiveData<PriceResponse>()
 
-    val text: LiveData<String> = _text
+    val result: LiveData<PriceResponse> = _result
 
     fun calcPrice(from: String, to: String, axis: String, consumption: String, fuelPrice: String) {
         val fromObs = fetchGeocode(from)
@@ -39,6 +37,7 @@ class SearchViewModel : ViewModel() {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ response ->
+                _result.value = response
                 Log.e("Carol", "Success")
             }, {
                 Log.e("Carol", "Error")
@@ -60,12 +59,12 @@ class SearchViewModel : ViewModel() {
             .getGeocode(addressEncoded, googleKey)
             .map { res ->
                 res.body()?.let {
-                    it.results.first().geometry.location
+                    val coordinate = it.results.first().geometry.location
 
-//                    val latitude = "%.5f".format(coordinate.latitude).toDouble()
-//                    val longitude = "%.5f".format(coordinate.longitude).toDouble()
+                    val latitude = "%.5f".format(coordinate.latitude).toDouble()
+                    val longitude = "%.5f".format(coordinate.longitude).toDouble()
 
-//                    Coordinate(latitude, longitude)
+                    Coordinate(latitude, longitude)
                 }
             }
     }

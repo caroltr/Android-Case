@@ -2,8 +2,8 @@
     <string name="app_name">TruckPad</string>
     <string name="title_activity_maps">Map</string>
 
-    <string name="hint_from">De</string>
-    <string name="hint_to">Para</string>
+    <string name="hint_from">Origem</string>
+    <string name="hint_to">Destino</string>
     <string name="btn_calculate">Calcular custo</string>
 
     <string name="vehicle_info">Informações do veículo</string>
@@ -14,6 +14,13 @@
 
     <string name="title_search">Pesquisa</string>
     <string name="title_result">Resultado</string>
-    <string name="title_activity_home">HomeActivity</string>
+
+    <string name="title_axis">Eixos</string>
+    <string name="title_distance">Distância</string>
+    <string name="title_duration">Duração</string>
+    <string name="title_toll">Pedágio</string>
+    <string name="title_amount_fuel">Combustível necessário</string>
+    <string name="title_price_fuel">Total de combustível</string>
+    <string name="title_total_price">Total</string>
 
 </resources>

@@ -4,11 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.truckpad.androidcase.R
+import com.truckpad.androidcase.model.PriceResponse
+import kotlinx.android.synthetic.main.fragment_result.view.*
 
 class ResultFragment : Fragment() {
 
@@ -22,10 +22,14 @@ class ResultFragment : Fragment() {
         homeViewModel =
             ViewModelProviders.of(this).get(ResultViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_result, container, false)
-        val textView: TextView = root.findViewById(R.id.text_home)
-        homeViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
+
+        arguments?.get("price_extra")?.let {
+            val prices = it as PriceResponse
+            print(prices)
+
+            root.tv_axis.text = prices.geral.toString()
+        }
+
         return root
     }
 }

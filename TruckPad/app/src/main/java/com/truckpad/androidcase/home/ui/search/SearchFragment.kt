@@ -6,9 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import com.truckpad.androidcase.R
+import com.truckpad.androidcase.model.PriceResponse
 import kotlinx.android.synthetic.main.fragment_search.*
+
 
 class SearchFragment : Fragment() {
 
@@ -26,6 +30,10 @@ class SearchFragment : Fragment() {
         val btnEnter: Button = root.findViewById(R.id.btn_enter)
         btnEnter.setOnClickListener { calcPrice() }
 
+        searchViewModel.result.observe(viewLifecycleOwner, Observer {
+            showResultFragment(it)
+        })
+
         return root
     }
 
@@ -38,5 +46,12 @@ class SearchFragment : Fragment() {
         val fuelValue = et_fuel_value.text.toString()
 
         searchViewModel.calcPrice(from, to, axis, consumption, fuelValue)
+    }
+
+    private fun showResultFragment(result: PriceResponse) {
+        val bundle = Bundle()
+        bundle.putParcelable("price_extra", result)
+
+        findNavController().navigate(R.id.action_navigation_search_to_navigation_result2, bundle)
     }
 }
