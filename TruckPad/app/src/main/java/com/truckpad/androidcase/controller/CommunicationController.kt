@@ -5,7 +5,6 @@ import com.truckpad.androidcase.model.*
 import com.truckpad.androidcase.network.ApiFactory
 import io.reactivex.Observable
 import java.net.URLEncoder
-import kotlin.math.ln
 
 class CommunicationController {
 

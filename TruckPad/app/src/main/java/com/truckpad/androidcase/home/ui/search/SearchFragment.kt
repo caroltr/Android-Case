@@ -55,8 +55,9 @@ class SearchFragment : Fragment() {
                     val userLng = location.longitude
 
                     CommunicationController().fetchReverseGeocode(userLat, userLng).subscribeOn(
-                        Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe { it
+                        Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe {address ->
 
+                        root.et_from.setText(address)
                     }
 
                     print("teste")
