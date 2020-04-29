@@ -1,4 +1,4 @@
-package com.truckpad.androidcase
+package com.truckpad.androidcase.handler
 
 import android.Manifest
 import android.content.Context

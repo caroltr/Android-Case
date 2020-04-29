@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.snackbar.Snackbar
-import com.truckpad.androidcase.PermissionHandler
+import com.truckpad.androidcase.handler.PermissionHandler
 import com.truckpad.androidcase.R
 import com.truckpad.androidcase.home.HomeActivity
 import com.truckpad.androidcase.model.Coordinate
@@ -26,7 +26,12 @@ class SearchFragment : Fragment() {
 
     private lateinit var searchViewModel: SearchViewModel
     private val permissionHandler by lazy {
-        context?.let { PermissionHandler(it, this) }
+        context?.let {
+            PermissionHandler(
+                it,
+                this
+            )
+        }
     }
 
     override fun onCreateView(
