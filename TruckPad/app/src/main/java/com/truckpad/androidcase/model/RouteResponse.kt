@@ -1,7 +1,10 @@
 package com.truckpad.androidcase.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class RouteResponse(
     @SerializedName("cached") val cached: Boolean,
     @SerializedName("distance") val distance: Double,
@@ -20,9 +23,10 @@ data class RouteResponse(
     @SerializedName("toll_cost_unit") val tollCostUnit: String,
     @SerializedName("toll_count") val tollCount: Int,
     @SerializedName("total_cost") val totalCost: Double
-)
+): Parcelable
 
+@Parcelize
 data class Point(
     @SerializedName("point") val point: List<Double>,
     @SerializedName("provider") val provider: String
-)
+): Parcelable

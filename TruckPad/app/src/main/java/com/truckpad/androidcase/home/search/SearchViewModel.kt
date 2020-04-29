@@ -13,7 +13,8 @@ import java.util.ArrayList
 
 class SearchViewModel : ViewModel() {
 
-    private lateinit var routeResult: RouteResult
+//    private lateinit var routeResult: RouteResult
+    private lateinit var routeResult: RouteResponse
     private lateinit var routePath: ArrayList<Coordinate>
 
     private val communicationController = CommunicationController()
@@ -81,14 +82,17 @@ class SearchViewModel : ViewModel() {
 
     private fun handleRouteResponse(response: RouteResponse) {
         routePath = parseRoute(response.route.first())
+        routeResult = response
 
-        val distance = "${response.distance} ${response.distanceUnit}"
-        val duration = "${response.duration} ${response.durationUnit}"
-        val tollCost = "${response.tollCostUnit} ${response.tollCost}"
-        val fuelUsage = "${response.fuelUsage} ${response.fuelUsageUnit}"
-        val fuelCost = "${response.fuelCostUnit} ${response.fuelCost}"
+//        val distance = "${response.distance} ${response.distanceUnit}"
+//        val duration = "${response.duration} ${response.durationUnit}"
+//        val tollCost = "${response.tollCostUnit} ${response.tollCost}"
+//        val fuelUsage = "${response.fuelUsage} ${response.fuelUsageUnit}"
+//        val fuelCost = "${response.fuelCostUnit} ${response.fuelCost}"
+//
+//        response.totalCost
 
-        routeResult = RouteResult(distance, duration, tollCost, fuelUsage, fuelCost)
+//        routeResult = RouteResult(distance, duration, tollCost, fuelUsage, fuelCost)
     }
 
     private fun validateInput(

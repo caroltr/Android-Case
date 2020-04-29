@@ -7,6 +7,6 @@ import kotlinx.android.parcel.Parcelize
 data class ResultData(
     val from: String,
     val to: String,
-    val routeResult: RouteResult,
+    val routeResult: RouteResponse,
     val priceResponse: PriceResponse
 ) : Parcelable

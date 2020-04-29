@@ -8,7 +8,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.truckpad.androidcase.R
-import com.truckpad.androidcase.model.ResultData
+import com.truckpad.androidcase.model.PriceResponse
+import com.truckpad.androidcase.model.RouteData
+import com.truckpad.androidcase.util.asReais
 import kotlinx.android.synthetic.main.fragment_result.*
 
 class ResultFragment : Fragment() {
@@ -26,26 +28,32 @@ class ResultFragment : Fragment() {
         val root = inflater.inflate(R.layout.fragment_result, container, false)
 
         resultViewModel.handleData(arguments)
-        resultViewModel.result.observe(viewLifecycleOwner, Observer { displayData(it) })
+        setObservers()
 
         return root
     }
 
-    private fun displayData(result: ResultData) {
-        tv_from.text = result.from
-        tv_to.text = result.to
-        tv_distance.text = result.routeResult.distance
-        tv_duration.text = result.routeResult.duration
-        tv_toll.text = result.routeResult.tollCost
-        tv_amount_fuel.text = result.routeResult.fuelUsage
-        tv_price_fuel.text = result.routeResult.fuelCost
-        tv_total.text = ""
+    private fun setObservers() {
+        resultViewModel.from.observe(viewLifecycleOwner, Observer { tv_from.text = it })
+        resultViewModel.to.observe(viewLifecycleOwner, Observer { tv_to.text = it })
+        resultViewModel.prices.observe(viewLifecycleOwner, Observer { displayPrices(it) })
+        resultViewModel.routeData.observe(viewLifecycleOwner, Observer { displayData(it) })
+    }
 
-        // Prices
-        tv_general.text = result.priceResponse.geral.toString()
-        tv_granel.text = result.priceResponse.granel.toString()
-        tv_neogranel.text = result.priceResponse.neogranel.toString()
-        tv_frigorificada.text = result.priceResponse.frigorificada.toString()
-        tv_dangerous.text = result.priceResponse.perigosa.toString()
+    private fun displayPrices(prices: PriceResponse) {
+        tv_general.text = prices.geral.asReais()
+        tv_granel.text = prices.granel.asReais()
+        tv_neogranel.text = prices.neogranel.asReais()
+        tv_frigorificada.text = prices.frigorificada.asReais()
+        tv_dangerous.text = prices.perigosa.asReais()
+    }
+
+    private fun displayData(data: RouteData) {
+        tv_distance.text = data.distance
+        tv_duration.text = data.duration
+        tv_toll.text = data.tollCost
+        tv_amount_fuel.text = data.fuelUsage
+        tv_price_fuel.text = data.fuelCost
+        tv_total.text = data.total
     }
 }
