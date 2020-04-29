@@ -15,12 +15,18 @@
     <string name="title_search">Pesquisa</string>
     <string name="title_result">Resultado</string>
 
-    <string name="title_axis">Eixos</string>
     <string name="title_distance">Distância</string>
     <string name="title_duration">Duração</string>
     <string name="title_toll">Pedágio</string>
     <string name="title_amount_fuel">Combustível necessário</string>
     <string name="title_price_fuel">Total de combustível</string>
     <string name="title_total_price">Total</string>
+
+    <string name="title_table_prices">Tabela Frete - Preços Mínimos - ANTT</string>
+    <string name="title_price_general">Geral</string>
+    <string name="title_price_granel">Granel</string>
+    <string name="title_price_neogranel">Neogranel</string>
+    <string name="title_price_frigorificada">Frigorificada</string>
+    <string name="title_price_dangerous">Perigosa</string>
 
 </resources>

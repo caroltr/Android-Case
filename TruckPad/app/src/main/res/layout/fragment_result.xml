@@ -7,9 +7,9 @@
     tools:context=".home.ui.result.ResultFragment">
 
     <TableLayout
+        android:id="@+id/tableLayout"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -43,23 +43,6 @@
 
             <TextView
                 android:id="@+id/tv_to"
-                android:layout_weight="1"
-                android:gravity="center" />
-
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/tv_axis_title"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="@string/title_axis" />
-
-            <TextView
-                android:id="@+id/tv_axis"
                 android:layout_weight="1"
                 android:gravity="center" />
 
@@ -162,6 +145,114 @@
 
             <TextView
                 android:id="@+id/tv_total_price"
+                android:layout_weight="1"
+                android:gravity="center" />
+
+        </TableRow>
+
+    </TableLayout>
+
+    <TableLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="1dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tableLayout">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/title_table_prices" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tv_general_title"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/title_price_general" />
+
+            <TextView
+                android:id="@+id/tv_general"
+                android:layout_weight="1"
+                android:gravity="center" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tv_granel_title"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/title_price_granel" />
+
+            <TextView
+                android:id="@+id/tv_granel"
+                android:layout_weight="1"
+                android:gravity="center" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tv_neogranel_title"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/title_price_neogranel" />
+
+            <TextView
+                android:id="@+id/tv_neogranel"
+                android:layout_weight="1"
+                android:gravity="center" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tv_frigorificada_title"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/title_price_frigorificada" />
+
+            <TextView
+                android:id="@+id/tv_frigorificada"
+                android:layout_weight="1"
+                android:gravity="center" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tv_dangerous_title"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/title_price_dangerous" />
+
+            <TextView
+                android:id="@+id/tv_dangerous"
                 android:layout_weight="1"
                 android:gravity="center" />
 
