@@ -39,7 +39,7 @@ class ResultFragment : Fragment() {
         tv_toll.text = result.routeResult.tollCost
         tv_amount_fuel.text = result.routeResult.fuelUsage
         tv_price_fuel.text = result.routeResult.fuelCost
-        tv_total_price.text = ""
+        tv_total.text = ""
 
         // Prices
         tv_general.text = result.priceResponse.geral.toString()
