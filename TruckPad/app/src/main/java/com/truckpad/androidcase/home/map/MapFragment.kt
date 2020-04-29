@@ -1,4 +1,4 @@
-package com.truckpad.androidcase.home.ui.map
+package com.truckpad.androidcase.home.map
 
 import android.graphics.Color
 import android.os.Bundle

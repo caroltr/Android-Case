@@ -1,4 +1,4 @@
-package com.truckpad.androidcase.home.ui.search
+package com.truckpad.androidcase.home.search
 
 import android.Manifest
 import android.os.Bundle

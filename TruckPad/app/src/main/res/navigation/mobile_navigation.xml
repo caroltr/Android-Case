@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/navigation_result"
-        android:name="com.truckpad.androidcase.home.ui.result.ResultFragment"
+        android:name="com.truckpad.androidcase.home.result.ResultFragment"
         android:label="@string/title_result"
         tools:layout="@layout/fragment_result">
         <action
@@ -17,7 +17,7 @@
 
     <fragment
         android:id="@+id/navigation_search"
-        android:name="com.truckpad.androidcase.home.ui.search.SearchFragment"
+        android:name="com.truckpad.androidcase.home.search.SearchFragment"
         android:label="@string/title_search"
         tools:layout="@layout/fragment_search">
         <action
@@ -27,7 +27,7 @@
 
     <fragment
         android:id="@+id/navigation_map"
-        android:name="com.truckpad.androidcase.home.ui.map.MapFragment"
+        android:name="com.truckpad.androidcase.home.map.MapFragment"
         android:label="@string/title_map"
         tools:layout="@layout/fragment_map">
     </fragment>

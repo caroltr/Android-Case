@@ -1,4 +1,4 @@
-package com.truckpad.androidcase.home.ui.search
+package com.truckpad.androidcase.home.search
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

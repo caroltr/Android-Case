@@ -1,4 +1,4 @@
-package com.truckpad.androidcase.home.ui.result
+package com.truckpad.androidcase.home.result
 
 import android.os.Bundle
 import android.view.LayoutInflater
