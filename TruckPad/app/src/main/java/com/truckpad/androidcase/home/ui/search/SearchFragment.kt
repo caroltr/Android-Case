@@ -15,7 +15,6 @@ import com.truckpad.androidcase.util.Extra
 import kotlinx.android.synthetic.main.fragment_search.*
 import kotlinx.android.synthetic.main.fragment_search.view.*
 
-
 class SearchFragment : Fragment() {
 
     private lateinit var searchViewModel: SearchViewModel

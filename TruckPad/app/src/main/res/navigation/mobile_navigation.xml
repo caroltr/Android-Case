@@ -9,13 +9,17 @@
         android:id="@+id/navigation_result"
         android:name="com.truckpad.androidcase.home.ui.result.ResultFragment"
         android:label="@string/title_result"
-        tools:layout="@layout/fragment_result" />
+        tools:layout="@layout/fragment_result">
+        <action
+            android:id="@+id/action_navigation_result_to_navigation_map"
+            app:destination="@id/navigation_map" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_search"
         android:name="com.truckpad.androidcase.home.ui.search.SearchFragment"
         android:label="@string/title_search"
-        tools:layout="@layout/fragment_search" >
+        tools:layout="@layout/fragment_search">
         <action
             android:id="@+id/action_navigation_search_to_navigation_result2"
             app:destination="@id/navigation_result" />
@@ -25,6 +29,7 @@
         android:id="@+id/navigation_map"
         android:name="com.truckpad.androidcase.home.ui.map.MapFragment"
         android:label="@string/title_map"
-        tools:layout="@layout/fragment_map" />
+        tools:layout="@layout/fragment_map">
+    </fragment>
 
 </navigation>

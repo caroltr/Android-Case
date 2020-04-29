@@ -6,10 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import com.truckpad.androidcase.R
 import com.truckpad.androidcase.model.ResultData
 import com.truckpad.androidcase.util.Extra
 import kotlinx.android.synthetic.main.fragment_result.view.*
+import kotlinx.android.synthetic.main.fragment_result.view.btn_map
 
 class ResultFragment : Fragment() {
 
@@ -44,6 +46,15 @@ class ResultFragment : Fragment() {
             root.tv_dangerous.text = result.priceResponse.perigosa.toString()
         }
 
+        root.btn_map.setOnClickListener { showMapFragment() }
+
         return root
+    }
+
+    private fun showMapFragment() {
+        val bundle = Bundle()
+//        bundle.putParcelable(Extra.PRICE.value, result)
+
+        findNavController().navigate(R.id.action_navigation_result_to_navigation_map, bundle)
     }
 }

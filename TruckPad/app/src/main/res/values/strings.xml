@@ -5,6 +5,7 @@
     <string name="hint_from">Origem</string>
     <string name="hint_to">Destino</string>
     <string name="btn_calculate">Calcular custo</string>
+    <string name="btn_map_path">Ver trajeto</string>
 
     <string name="vehicle_info">Informações do veículo</string>
     <string name="path">Trajeto</string>

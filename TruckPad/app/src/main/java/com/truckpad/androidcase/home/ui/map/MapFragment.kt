@@ -12,7 +12,6 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.truckpad.androidcase.R
 import kotlinx.android.synthetic.main.fragment_map.view.*
 
-
 class MapFragment : Fragment(), OnMapReadyCallback {
 
     private lateinit var mapViewModel: MapViewModel
