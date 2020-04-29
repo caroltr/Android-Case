@@ -5,6 +5,7 @@ import com.truckpad.androidcase.model.*
 import com.truckpad.androidcase.network.ApiFactory
 import io.reactivex.Observable
 import java.net.URLEncoder
+import kotlin.math.ln
 
 class CommunicationController {
 
@@ -74,6 +75,25 @@ class CommunicationController {
 //                    val latitude = "%.5f".format(coordinate.latitude).toDouble()
 //                    val longitude = "%.5f".format(coordinate.longitude).toDouble()
 //                    Coordinate(latitude, longitude)\
+            }
+    }
+
+    fun fetchReverseGeocode(lat: Double, lng: Double): Observable<String> {
+        val googleKey = "AIzaSyBW2GhHdV3obS6jEkTGHjod5REtuSSKFcQ"
+        val latLng = "$lat, $lng"
+
+        return ApiFactory.geocodeApi
+            .getReverseGeocode(latLng, googleKey)
+            .map { response ->
+                if (response.isSuccessful) {
+                    response.body()?.let {
+                        it.results.first().formattedAddress
+                    } ?: run {
+                        error(CommunicationException())
+                    }
+                } else {
+                    error(CommunicationException())
+                }
             }
     }
 }

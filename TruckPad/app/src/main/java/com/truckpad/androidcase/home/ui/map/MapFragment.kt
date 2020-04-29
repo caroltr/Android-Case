@@ -13,14 +13,12 @@ import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
-import com.google.android.gms.maps.model.Polyline
 import com.google.android.gms.maps.model.PolylineOptions
 import com.truckpad.androidcase.R
 import com.truckpad.androidcase.model.Coordinate
 import com.truckpad.androidcase.util.Extra
 import kotlinx.android.synthetic.main.fragment_map.view.*
 import java.util.*
-
 
 class MapFragment : Fragment(), OnMapReadyCallback {
 
@@ -50,8 +48,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
-//        googleMap.isMyLocationEnabled = true
-
         val polyLine = PolylineOptions()
         val builder = LatLngBounds.Builder()
 
@@ -62,13 +58,10 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         }
         polyLine.width(5f).color(Color.RED)
         val bounds = builder.build()
-        val line: Polyline = googleMap.addPolyline(polyLine)
+        googleMap.addPolyline(polyLine)
 
         val cameraUpdate = CameraUpdateFactory.newLatLngBounds(bounds, 50)
         googleMap.animateCamera(cameraUpdate)
-
-//        googleMap.moveCamera(CameraUpdateFactory.newLatLng())
-
     }
 
     override fun onResume() {
