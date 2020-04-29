@@ -29,13 +29,19 @@ class ResultFragment : Fragment() {
 
             root.tv_from.text = result.from
             root.tv_to.text = result.to
-            root.tv_axis.text = ""
             root.tv_distance.text = result.routeResult.distance
             root.tv_duration.text = result.routeResult.duration
             root.tv_toll.text = result.routeResult.tollCost
             root.tv_amount_fuel.text = result.routeResult.fuelUsage
             root.tv_price_fuel.text = result.routeResult.fuelCost
             root.tv_total_price.text = ""
+
+            // Prices
+            root.tv_general.text = result.priceResponse.geral.toString()
+            root.tv_granel.text = result.priceResponse.granel.toString()
+            root.tv_neogranel.text = result.priceResponse.neogranel.toString()
+            root.tv_frigorificada.text = result.priceResponse.frigorificada.toString()
+            root.tv_dangerous.text = result.priceResponse.perigosa.toString()
         }
 
         return root
