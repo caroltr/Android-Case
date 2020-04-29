@@ -29,7 +29,7 @@
         android:ems="10"
         android:hint="@string/hint_from"
         android:imeOptions="actionNext"
-        android:inputType="textPersonName"
+        android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_path_title"
@@ -45,7 +45,7 @@
         android:ems="10"
         android:hint="@string/hint_to"
         android:imeOptions="actionDone"
-        android:inputType="textPersonName"
+        android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_from" />
@@ -73,7 +73,7 @@
         android:ems="10"
         android:hint="@string/amount_axes"
         android:imeOptions="actionNext"
-        android:inputType="textPersonName"
+        android:inputType="number|textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_vehicle_info" />
@@ -88,7 +88,7 @@
         android:ems="10"
         android:hint="@string/average_consumption"
         android:imeOptions="actionNext"
-        android:inputType="textPersonName"
+        android:inputType="number|textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_axes" />
@@ -116,7 +116,8 @@
         android:layout_marginEnd="12dp"
         android:ems="10"
         android:hint="@string/fuel_value"
-        android:inputType="textPersonName"
+        android:imeOptions="actionDone"
+        android:inputType="number|textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_consumption" />

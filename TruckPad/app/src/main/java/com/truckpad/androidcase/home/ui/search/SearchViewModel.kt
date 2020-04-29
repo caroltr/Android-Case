@@ -23,26 +23,37 @@ class SearchViewModel : ViewModel() {
     val errorMessage: LiveData<String> = _errorMessage
 
     fun calcPrice(from: String, to: String, axis: String, consumption: String, fuelPrice: String) {
-        val geocodeFrom = communicationController.fetchGeocode(from)
-        val geocodeTo = communicationController.fetchGeocode(to)
 
-        val disposable = Observable.zip(geocodeFrom, geocodeTo, geocodeBiFunction)
-            .flatMap { communicationController.fetchRoute(it[0], it[1], consumption.toDouble(), fuelPrice.toDouble()) }
-            .doOnNext { handleRouteResponse(it) }
-            .flatMap { communicationController.fetchPrice(axis.toInt(), it.distance) }
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
+        if (validateInput(from, to, axis, consumption, fuelPrice)) {
 
-                val resultData = ResultData(
-                    "", "",
-                    routeResult, it
-                )
-                _result.value = resultData
+            val geocodeFrom = communicationController.fetchGeocode(from)
+            val geocodeTo = communicationController.fetchGeocode(to)
 
-            }, {
-                _errorMessage.value = it.message
-            })
+            val disposable = Observable.zip(geocodeFrom, geocodeTo, geocodeBiFunction)
+                .flatMap {
+                    communicationController.fetchRoute(
+                        it[0],
+                        it[1],
+                        consumption.toDouble(),
+                        fuelPrice.toDouble()
+                    )
+                }
+                .doOnNext { handleRouteResponse(it) }
+                .flatMap { communicationController.fetchPrice(axis.toInt(), it.distance) }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+
+                    val resultData = ResultData(
+                        "", "",
+                        routeResult, it
+                    )
+                    _result.value = resultData
+
+                }, {
+                    _errorMessage.value = it.message
+                })
+        }
     }
 
     private val geocodeBiFunction = BiFunction<Coordinate, Coordinate, List<Coordinate>> { fromCoordinate, toCoordinate -> listOf(fromCoordinate, toCoordinate) }
@@ -55,5 +66,21 @@ class SearchViewModel : ViewModel() {
         val fuelCost = "${response.fuelCostUnit} ${response.fuelCost}"
 
         routeResult = RouteResult(distance, duration, tollCost, fuelUsage, fuelCost)
+    }
+
+    private fun validateInput(from: String, to: String, axis: String, consumption: String, fuelPrice: String): Boolean {
+        val emptyField = from.isBlank() || to.isBlank() || axis.isBlank() || consumption.isBlank() || fuelPrice.isBlank()
+        return if (emptyField) {
+            _errorMessage.value = "Um ou mais campos não foram preenchidos"
+            false
+        } else {
+            val axisNum = axis.toInt()
+            if (axisNum in 2..9) {
+                true
+            } else {
+                _errorMessage.value = "A quantidade de eixos deve ser entre 2 e 9"
+                false
+            }
+        }
     }
 }
