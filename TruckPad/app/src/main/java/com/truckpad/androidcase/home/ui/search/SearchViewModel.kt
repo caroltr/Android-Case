@@ -65,7 +65,7 @@ class SearchViewModel : ViewModel() {
 
     private fun handleRouteResponse(response: RouteResponse) {
 
-        val route = response.route
+        val route = response.route.first()
 
         val distance = "${response.distance} ${response.distanceUnit}"
         val duration = "${response.duration} ${response.durationUnit}"
@@ -73,7 +73,7 @@ class SearchViewModel : ViewModel() {
         val fuelUsage = "${response.fuelUsage} ${response.fuelUsageUnit}"
         val fuelCost = "${response.fuelCostUnit} ${response.fuelCost}"
 
-        routeResult = RouteResult(distance, duration, tollCost, fuelUsage, fuelCost)
+        routeResult = RouteResult(route, distance, duration, tollCost, fuelUsage, fuelCost)
     }
 
     private fun validateInput(from: String, to: String, axis: String, consumption: String, fuelPrice: String): Boolean {
