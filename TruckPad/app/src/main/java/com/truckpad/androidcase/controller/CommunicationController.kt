@@ -3,6 +3,7 @@ package com.truckpad.androidcase.controller
 import com.truckpad.androidcase.exception.CommunicationException
 import com.truckpad.androidcase.model.*
 import com.truckpad.androidcase.network.ApiFactory
+import com.truckpad.androidcase.util.G_K
 import io.reactivex.Observable
 import java.net.URLEncoder
 
@@ -53,11 +54,10 @@ class CommunicationController {
     }
 
     fun fetchGeocode(address: String): Observable<City> {
-        val googleKey = "AIzaSyBW2GhHdV3obS6jEkTGHjod5REtuSSKFcQ"
         val addressEncoded = URLEncoder.encode(address, "UTF-8")
 
         return ApiFactory.geocodeApi
-            .getGeocode(addressEncoded, googleKey)
+            .getGeocode(addressEncoded, G_K)
             .map { response ->
                 if (response.isSuccessful) {
                     response.body()?.let {
@@ -75,11 +75,10 @@ class CommunicationController {
     }
 
     fun fetchReverseGeocode(lat: Double, lng: Double): Observable<String> {
-        val googleKey = "AIzaSyBW2GhHdV3obS6jEkTGHjod5REtuSSKFcQ"
         val latLng = "$lat, $lng"
 
         return ApiFactory.geocodeApi
-            .getReverseGeocode(latLng, googleKey)
+            .getReverseGeocode(latLng, G_K)
             .map { response ->
                 if (response.isSuccessful) {
                     response.body()?.let {
