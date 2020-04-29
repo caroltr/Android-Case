@@ -64,6 +64,9 @@ class SearchViewModel : ViewModel() {
     private val geocodeBiFunction = BiFunction<City, City, List<City>> { fromCity, toCity -> listOf(fromCity, toCity) }
 
     private fun handleRouteResponse(response: RouteResponse) {
+
+        val route = response.route
+
         val distance = "${response.distance} ${response.distanceUnit}"
         val duration = "${response.duration} ${response.durationUnit}"
         val tollCost = "${response.tollCostUnit} ${response.tollCost}"
