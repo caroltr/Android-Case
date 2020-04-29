@@ -7,13 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.fragment.findNavController
 import com.truckpad.androidcase.R
-import com.truckpad.androidcase.model.Coordinate
 import com.truckpad.androidcase.model.ResultData
-import com.truckpad.androidcase.util.Extra
 import kotlinx.android.synthetic.main.fragment_result.*
-import kotlinx.android.synthetic.main.fragment_result.view.btn_map
 
 class ResultFragment : Fragment() {
 
@@ -26,16 +22,11 @@ class ResultFragment : Fragment() {
     ): View? {
         resultViewModel =
             ViewModelProviders.of(this).get(ResultViewModel::class.java)
+
         val root = inflater.inflate(R.layout.fragment_result, container, false)
 
         resultViewModel.handleData(arguments)
-
         resultViewModel.result.observe(viewLifecycleOwner, Observer { displayData(it) })
-        resultViewModel.route.observe(viewLifecycleOwner, Observer {  })
-
-        root.btn_map.setOnClickListener {
-//            showMapFragment(route)
-        }
 
         return root
     }
@@ -56,11 +47,5 @@ class ResultFragment : Fragment() {
         tv_neogranel.text = result.priceResponse.neogranel.toString()
         tv_frigorificada.text = result.priceResponse.frigorificada.toString()
         tv_dangerous.text = result.priceResponse.perigosa.toString()
-    }
-
-    private fun showMapFragment(route: ArrayList<Coordinate>) {
-        val bundle = Bundle()
-        bundle.putParcelableArrayList(Extra.ROUTE.value, route)
-        findNavController().navigate(R.id.action_navigation_result_to_navigation_map, bundle)
     }
 }

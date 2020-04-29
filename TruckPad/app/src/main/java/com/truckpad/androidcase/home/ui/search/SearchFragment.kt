@@ -14,6 +14,8 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.material.snackbar.Snackbar
 import com.truckpad.androidcase.PermissionHandler
 import com.truckpad.androidcase.R
+import com.truckpad.androidcase.home.HomeActivity
+import com.truckpad.androidcase.model.Coordinate
 import com.truckpad.androidcase.model.ResultData
 import com.truckpad.androidcase.util.Extra
 import com.truckpad.androidcase.util.RequestCode
@@ -47,6 +49,7 @@ class SearchFragment : Fragment() {
             calcPrice()
         }
 
+        setRoute(null)
         setObservers(root)
 
         return root
@@ -66,6 +69,10 @@ class SearchFragment : Fragment() {
             stopLoad(root)
             setError(root, it)
         })
+
+        searchViewModel.route.observe(viewLifecycleOwner, Observer {
+            setRoute(it)
+        })
     }
 
     private fun calcPrice() {
@@ -82,7 +89,6 @@ class SearchFragment : Fragment() {
     private fun showResultFragment(result: ResultData) {
         val bundle = Bundle()
         bundle.putParcelable(Extra.PRICE.value, result)
-
         findNavController().navigate(R.id.action_navigation_search_to_navigation_result2, bundle)
     }
 
@@ -135,5 +141,11 @@ class SearchFragment : Fragment() {
                 searchViewModel.getAddress(location.latitude, location.longitude)
             }
         }
+    }
+
+    private fun setRoute(route: ArrayList<Coordinate>?) {
+        activity?.let { (it as? HomeActivity)?.let { act ->
+            act.route = route
+        } }
     }
 }

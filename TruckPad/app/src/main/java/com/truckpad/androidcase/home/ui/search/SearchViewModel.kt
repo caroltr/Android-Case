@@ -9,20 +9,24 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.BiFunction
 import io.reactivex.schedulers.Schedulers
+import java.util.ArrayList
 
 class SearchViewModel : ViewModel() {
 
     private lateinit var routeResult: RouteResult
+    private lateinit var routePath: ArrayList<Coordinate>
 
     private val communicationController = CommunicationController()
 
     private val _result = MutableLiveData<ResultData>()
     private val _fromAddress = MutableLiveData<String>()
     private val _errorMessage = MutableLiveData<String>()
+    private val _route = MutableLiveData<ArrayList<Coordinate>>()
 
     val result: LiveData<ResultData> = _result
     val fromAddress: LiveData<String> = _fromAddress
     val errorMessage: LiveData<String> = _errorMessage
+    val route: LiveData<ArrayList<Coordinate>> = _route
 
     fun calcPrice(from: String, to: String, axis: String, consumption: String, fuelPrice: String) {
 
@@ -57,6 +61,7 @@ class SearchViewModel : ViewModel() {
                         routeResult, it
                     )
                     _result.value = resultData
+                    _route.value = routePath
                 }, {
                     _errorMessage.value = it.message
                 })
@@ -75,8 +80,7 @@ class SearchViewModel : ViewModel() {
         BiFunction<City, City, List<City>> { fromCity, toCity -> listOf(fromCity, toCity) }
 
     private fun handleRouteResponse(response: RouteResponse) {
-
-        val route = response.route.first()
+        routePath = parseRoute(response.route.first())
 
         val distance = "${response.distance} ${response.distanceUnit}"
         val duration = "${response.duration} ${response.durationUnit}"
@@ -84,7 +88,7 @@ class SearchViewModel : ViewModel() {
         val fuelUsage = "${response.fuelUsage} ${response.fuelUsageUnit}"
         val fuelCost = "${response.fuelCostUnit} ${response.fuelCost}"
 
-        routeResult = RouteResult(route, distance, duration, tollCost, fuelUsage, fuelCost)
+        routeResult = RouteResult(distance, duration, tollCost, fuelUsage, fuelCost)
     }
 
     private fun validateInput(
@@ -108,5 +112,13 @@ class SearchViewModel : ViewModel() {
                 false
             }
         }
+    }
+
+    private fun parseRoute(rawRoute: List<List<Double>>): ArrayList<Coordinate> {
+        val route = ArrayList<Coordinate>()
+        rawRoute.forEach { list ->
+            route.add(Coordinate(list[0], list[1]))
+        }
+        return route
     }
 }

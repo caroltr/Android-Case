@@ -15,10 +15,9 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.PolylineOptions
 import com.truckpad.androidcase.R
+import com.truckpad.androidcase.home.HomeActivity
 import com.truckpad.androidcase.model.Coordinate
-import com.truckpad.androidcase.util.Extra
 import kotlinx.android.synthetic.main.fragment_map.view.*
-import java.util.*
 
 class MapFragment : Fragment(), OnMapReadyCallback {
 
@@ -36,9 +35,9 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             ViewModelProviders.of(this).get(MapViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_map, container, false)
 
-        arguments?.get(Extra.ROUTE.value)?.let {
-            route = it as ArrayList<Coordinate>
-        }
+        activity?.let { (it as? HomeActivity)?.let { act ->
+            route = act.route
+        } }
 
         mapView = root.map
         mapView.onCreate(savedInstanceState)
@@ -48,20 +47,23 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
-        val polyLine = PolylineOptions()
-        val builder = LatLngBounds.Builder()
+        route?.let {
+            val polyLine = PolylineOptions()
+            val builder = LatLngBounds.Builder()
 
-        route?.forEach {
-            val latLng = LatLng(it.longitude, it.latitude)
-            polyLine.add(latLng)
-            builder.include(latLng)
+            it.forEach { coordinate ->
+                val latLng = LatLng(coordinate.longitude, coordinate.latitude)
+                polyLine.add(latLng)
+                builder.include(latLng)
+            }
+            polyLine.width(5f).color(Color.RED)
+
+            val bounds = builder.build()
+            val cameraUpdate = CameraUpdateFactory.newLatLngBounds(bounds, 50)
+
+            googleMap.addPolyline(polyLine)
+            googleMap.animateCamera(cameraUpdate)
         }
-        polyLine.width(5f).color(Color.RED)
-        val bounds = builder.build()
-        googleMap.addPolyline(polyLine)
-
-        val cameraUpdate = CameraUpdateFactory.newLatLngBounds(bounds, 50)
-        googleMap.animateCamera(cameraUpdate)
     }
 
     override fun onResume() {
