@@ -5,6 +5,5 @@ enum class RequestCode(val code: Int) {
 }
 
 enum class Extra(val value: String) {
-    PRICE("extra_price"),
-    ROUTE("route_price");
+    PRICE("extra_price");
 }

@@ -71,9 +71,6 @@ class CommunicationController {
                 } else {
                     error(CommunicationException())
                 }
-//                    val latitude = "%.5f".format(coordinate.latitude).toDouble()
-//                    val longitude = "%.5f".format(coordinate.longitude).toDouble()
-//                    Coordinate(latitude, longitude)\
             }
     }
 

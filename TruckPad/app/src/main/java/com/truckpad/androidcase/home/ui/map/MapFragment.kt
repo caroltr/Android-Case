@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
@@ -20,8 +19,6 @@ import com.truckpad.androidcase.model.Coordinate
 import kotlinx.android.synthetic.main.fragment_map.view.*
 
 class MapFragment : Fragment(), OnMapReadyCallback {
-
-    private lateinit var mapViewModel: MapViewModel
     private lateinit var mapView: MapView
 
     private var route: List<Coordinate>? = null
@@ -31,22 +28,22 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        mapViewModel =
-            ViewModelProviders.of(this).get(MapViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_map, container, false)
 
-        activity?.let { (it as? HomeActivity)?.let { act ->
-            route = act.route
-        } }
-
-        mapView = root.map
-        mapView.onCreate(savedInstanceState)
-        mapView.getMapAsync(this)
+        getRoute()
+        setupMapView(root, savedInstanceState)
 
         return root
     }
 
+    private fun setupMapView(view: View, savedInstance: Bundle?) {
+        mapView = view.map
+        mapView.onCreate(savedInstance)
+        mapView.getMapAsync(this)
+    }
+
     override fun onMapReady(googleMap: GoogleMap) {
+        // Draw line
         route?.let {
             val polyLine = PolylineOptions()
             val builder = LatLngBounds.Builder()
@@ -94,5 +91,11 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     override fun onLowMemory() {
         super.onLowMemory()
         mapView.onLowMemory()
+    }
+
+    private fun getRoute() {
+        activity?.let { (it as? HomeActivity)?.let { act ->
+            route = act.route
+        } }
     }
 }
