@@ -29,11 +29,17 @@ class SearchViewModel : ViewModel() {
             val geocodeFrom = communicationController.fetchGeocode(from)
             val geocodeTo = communicationController.fetchGeocode(to)
 
+            lateinit var fromCity: City
+            lateinit var toCity: City
+
             val disposable = Observable.zip(geocodeFrom, geocodeTo, geocodeBiFunction)
                 .flatMap {
+                    fromCity = it[0]
+                    toCity = it[1]
+
                     communicationController.fetchRoute(
-                        it[0],
-                        it[1],
+                        fromCity.coordinate,
+                        toCity.coordinate,
                         consumption.toDouble(),
                         fuelPrice.toDouble()
                     )
@@ -45,18 +51,17 @@ class SearchViewModel : ViewModel() {
                 .subscribe({
 
                     val resultData = ResultData(
-                        "", "",
+                        fromCity.name, toCity.name,
                         routeResult, it
                     )
                     _result.value = resultData
-
                 }, {
                     _errorMessage.value = it.message
                 })
         }
     }
 
-    private val geocodeBiFunction = BiFunction<Coordinate, Coordinate, List<Coordinate>> { fromCoordinate, toCoordinate -> listOf(fromCoordinate, toCoordinate) }
+    private val geocodeBiFunction = BiFunction<City, City, List<City>> { fromCity, toCity -> listOf(fromCity, toCity) }
 
     private fun handleRouteResponse(response: RouteResponse) {
         val distance = "${response.distance} ${response.distanceUnit}"

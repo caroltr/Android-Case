@@ -52,7 +52,7 @@ class CommunicationController {
             }
     }
 
-    fun fetchGeocode(address: String): Observable<Coordinate> {
+    fun fetchGeocode(address: String): Observable<City> {
         val googleKey = "AIzaSyBW2GhHdV3obS6jEkTGHjod5REtuSSKFcQ"
         val addressEncoded = URLEncoder.encode(address, "UTF-8")
 
@@ -61,7 +61,10 @@ class CommunicationController {
             .map { response ->
                 if (response.isSuccessful) {
                     response.body()?.let {
-                        it.results.first().geometry.location
+                        val name = it.results.first().formattedAddress
+                        val coordinate = it.results.first().geometry.location
+
+                        City(name, coordinate)
                     } ?: run {
                         error(CommunicationException())
                     }
