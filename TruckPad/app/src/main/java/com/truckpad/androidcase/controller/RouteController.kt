@@ -17,4 +17,6 @@ class RouteController {
 
         return RouteData(distance, duration, tollCost, fuelUsage, fuelCost, total)
     }
+
+    fun fromMetersToKm(value: Double): Double = (value / 1000)
 }
