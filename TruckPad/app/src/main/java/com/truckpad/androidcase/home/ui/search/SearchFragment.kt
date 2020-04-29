@@ -10,23 +10,17 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
-import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.truckpad.androidcase.PermissionHandler
 import com.truckpad.androidcase.R
-import com.truckpad.androidcase.controller.CommunicationController
 import com.truckpad.androidcase.model.ResultData
-import com.truckpad.androidcase.network.ApiFactory
 import com.truckpad.androidcase.util.Extra
 import com.truckpad.androidcase.util.RequestCode
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_search.*
 import kotlinx.android.synthetic.main.fragment_search.view.*
 
 class SearchFragment : Fragment() {
 
-    //    private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var searchViewModel: SearchViewModel
     private val permissionHandler by lazy {
         activity?.let {
@@ -47,47 +41,39 @@ class SearchFragment : Fragment() {
             Manifest.permission.ACCESS_FINE_LOCATION,
             RequestCode.PERMISSION_LOCATION
         ) {
-            println("CAROL - Permission granted")
             activity?.let {
                 val fusedLocationClient = LocationServices.getFusedLocationProviderClient(it)
                 fusedLocationClient.lastLocation.addOnSuccessListener { location ->
-                    val userLat = location.latitude
-                    val userLng = location.longitude
-
-                    CommunicationController().fetchReverseGeocode(userLat, userLng).subscribeOn(
-                        Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe {address ->
-
-                        root.et_from.setText(address)
-                    }
-
-                    print("teste")
+                    searchViewModel.getAddress(location.latitude, location.longitude)
                 }
             }
         }
 
         val btnEnter: Button = root.findViewById(R.id.btn_enter)
         btnEnter.setOnClickListener {
-            root.tv_error.visibility = View.GONE
-            root.pb_load.visibility = View.VISIBLE
-
+            startLoad(root)
             calcPrice()
         }
 
-        searchViewModel.result.observe(viewLifecycleOwner, Observer {
-            root.tv_error.visibility = View.GONE
-            root.pb_load.visibility = View.GONE
+        setObservers(root)
 
+        return root
+    }
+
+    private fun setObservers(root: View) {
+        searchViewModel.fromAddress.observe(viewLifecycleOwner, Observer {
+            root.et_from.setText(it)
+        })
+
+        searchViewModel.result.observe(viewLifecycleOwner, Observer {
+            stopLoad(root)
             showResultFragment(it)
         })
 
         searchViewModel.errorMessage.observe(viewLifecycleOwner, Observer {
-            root.tv_error.visibility = View.VISIBLE
-            root.pb_load.visibility = View.GONE
-
-            root.tv_error.text = it
+            stopLoad(root)
+            setError(root, it)
         })
-
-        return root
     }
 
     private fun calcPrice() {
@@ -129,5 +115,19 @@ class SearchFragment : Fragment() {
                 // Ignore all other requests.
             }
         }
+    }
+
+    private fun startLoad(view: View) {
+        view.tv_error.visibility = View.GONE
+        view.pb_load.visibility = View.VISIBLE
+    }
+
+    private fun stopLoad(view: View) {
+        view.pb_load.visibility = View.GONE
+    }
+
+    private fun setError(view: View, message: String) {
+        view.tv_error.visibility = View.VISIBLE
+        view.tv_error.text = message
     }
 }

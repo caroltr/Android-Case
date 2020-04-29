@@ -17,9 +17,11 @@ class SearchViewModel : ViewModel() {
     private val communicationController = CommunicationController()
 
     private val _result = MutableLiveData<ResultData>()
+    private val _fromAddress = MutableLiveData<String>()
     private val _errorMessage = MutableLiveData<String>()
 
     val result: LiveData<ResultData> = _result
+    val fromAddress: LiveData<String> = _fromAddress
     val errorMessage: LiveData<String> = _errorMessage
 
     fun calcPrice(from: String, to: String, axis: String, consumption: String, fuelPrice: String) {
@@ -61,7 +63,16 @@ class SearchViewModel : ViewModel() {
         }
     }
 
-    private val geocodeBiFunction = BiFunction<City, City, List<City>> { fromCity, toCity -> listOf(fromCity, toCity) }
+    fun getAddress(lat: Double, lng: Double) {
+        val disposable = CommunicationController().fetchReverseGeocode(lat, lng).subscribeOn(
+            Schedulers.io()
+        ).observeOn(AndroidSchedulers.mainThread()).subscribe { address ->
+            _fromAddress.value = address
+        }
+    }
+
+    private val geocodeBiFunction =
+        BiFunction<City, City, List<City>> { fromCity, toCity -> listOf(fromCity, toCity) }
 
     private fun handleRouteResponse(response: RouteResponse) {
 
@@ -76,8 +87,15 @@ class SearchViewModel : ViewModel() {
         routeResult = RouteResult(route, distance, duration, tollCost, fuelUsage, fuelCost)
     }
 
-    private fun validateInput(from: String, to: String, axis: String, consumption: String, fuelPrice: String): Boolean {
-        val emptyField = from.isBlank() || to.isBlank() || axis.isBlank() || consumption.isBlank() || fuelPrice.isBlank()
+    private fun validateInput(
+        from: String,
+        to: String,
+        axis: String,
+        consumption: String,
+        fuelPrice: String
+    ): Boolean {
+        val emptyField =
+            from.isBlank() || to.isBlank() || axis.isBlank() || consumption.isBlank() || fuelPrice.isBlank()
         return if (emptyField) {
             _errorMessage.value = "Um ou mais campos não foram preenchidos"
             false
