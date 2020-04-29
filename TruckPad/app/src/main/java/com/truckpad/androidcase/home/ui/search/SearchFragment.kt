@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.location.LocationServices
+import com.google.android.material.snackbar.Snackbar
 import com.truckpad.androidcase.PermissionHandler
 import com.truckpad.androidcase.R
 import com.truckpad.androidcase.model.ResultData
@@ -23,9 +24,7 @@ class SearchFragment : Fragment() {
 
     private lateinit var searchViewModel: SearchViewModel
     private val permissionHandler by lazy {
-        activity?.let {
-            PermissionHandler(it)
-        }
+        context?.let { PermissionHandler(it, this) }
     }
 
     override fun onCreateView(
@@ -40,14 +39,7 @@ class SearchFragment : Fragment() {
         permissionHandler?.checkPermission(
             Manifest.permission.ACCESS_FINE_LOCATION,
             RequestCode.PERMISSION_LOCATION
-        ) {
-            activity?.let {
-                val fusedLocationClient = LocationServices.getFusedLocationProviderClient(it)
-                fusedLocationClient.lastLocation.addOnSuccessListener { location ->
-                    searchViewModel.getAddress(location.latitude, location.longitude)
-                }
-            }
-        }
+        ) { showUserLocation() }
 
         val btnEnter: Button = root.findViewById(R.id.btn_enter)
         btnEnter.setOnClickListener {
@@ -104,8 +96,13 @@ class SearchFragment : Fragment() {
         when (requestCode) {
             RequestCode.PERMISSION_LOCATION.code -> {
                 permissionHandler?.handlePermissionResult(grantResults, {
-                    println("CAROL - Result: Permission granted")
+                    showUserLocation()
                 }, {
+                    Snackbar.make(
+                        search_content,
+                        "A localização atual não pode ser encontrada devido à rejeição da permissão.",
+                        Snackbar.LENGTH_LONG
+                    ).show()
                     println("CAROL - Result: Permission denied")
                 })
                 return
@@ -129,5 +126,14 @@ class SearchFragment : Fragment() {
     private fun setError(view: View, message: String) {
         view.tv_error.visibility = View.VISIBLE
         view.tv_error.text = message
+    }
+
+    private fun showUserLocation() {
+        activity?.let {
+            val fusedLocationClient = LocationServices.getFusedLocationProviderClient(it)
+            fusedLocationClient.lastLocation.addOnSuccessListener { location ->
+                searchViewModel.getAddress(location.latitude, location.longitude)
+            }
+        }
     }
 }

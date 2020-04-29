@@ -1,13 +1,13 @@
 package com.truckpad.androidcase
 
 import android.Manifest
-import android.app.Activity
+import android.content.Context
 import android.content.pm.PackageManager
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import com.truckpad.androidcase.util.RequestCode
 
-class PermissionHandler(private val activity: Activity) {
+class PermissionHandler(private val context: Context, private val fragment: Fragment) {
 
     fun checkPermission(
         permission: String,
@@ -15,12 +15,10 @@ class PermissionHandler(private val activity: Activity) {
         onPermissionGranted: () -> Unit
     ) {
         if (ContextCompat
-                .checkSelfPermission(activity, permission)
+                .checkSelfPermission(context, permission)
             != PackageManager.PERMISSION_GRANTED
         ) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(
-                    activity, permission
-                )
+            if (fragment.shouldShowRequestPermissionRationale(permission)
             ) {
                 requestLocationPermission(requestCode)
 //                onShowExplanation()
@@ -46,8 +44,7 @@ class PermissionHandler(private val activity: Activity) {
     }
 
     private fun requestLocationPermission(requestCode: RequestCode) {
-        ActivityCompat.requestPermissions(
-            activity,
+        fragment.requestPermissions(
             arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
             requestCode.code
         )
