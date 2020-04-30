@@ -1,0 +1,37 @@
+<resources>
+    <string name="app_name">TruckPad</string>
+    <string name="title_activity_maps">Map</string>
+
+    <string name="hint_from">Origem</string>
+    <string name="hint_to">Destino</string>
+    <string name="btn_calculate">Calcular custo</string>
+    <string name="btn_map_path">Ver trajeto</string>
+
+    <string name="vehicle_info">Informações do veículo</string>
+    <string name="path">Trajeto</string>
+    <string name="amount_axes">Quantidade de eixos</string>
+    <string name="average_consumption">Consumo médio (Km/L)</string>
+    <string name="fuel_value">Preço do diesel (R$)</string>
+
+    <string name="title_search">Pesquisa</string>
+    <string name="title_result">Resultado</string>
+    <string name="title_map">Mapa</string>
+
+    <string name="title_distance">Distância</string>
+    <string name="title_duration">Duração</string>
+    <string name="title_toll">Pedágio</string>
+    <string name="title_amount_fuel">Combustível necessário</string>
+    <string name="title_price_fuel">Total de combustível</string>
+    <string name="title_total_price">Total</string>
+
+    <string name="title_table_prices">Tabela Frete - Preços Mínimos - ANTT</string>
+    <string name="title_price_general">Geral</string>
+    <string name="title_price_granel">Granel</string>
+    <string name="title_price_neogranel">Neogranel</string>
+    <string name="title_price_frigorificada">Frigorificada</string>
+    <string name="title_price_dangerous">Perigosa</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+</resources>
